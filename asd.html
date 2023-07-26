@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <input type="text" id="Ekran" readonly>
+    <div class="calc_butons">
+      <button onclick="clearEkran()">C</button>
+      <button onclick="appendToEkran('/')">/</button>
+      <button onclick="appendToEkran('*')">*</button>
+      <button onclick="appendToEkran('-')">-</button>
+      <div>
+      <button onclick="appendToEkran('7')">7</button>
+      <button onclick="appendToEkran('8')">8</button>
+      <button onclick="appendToEkran('9')">9</button>
+      <button onclick="appendToEkran('+')">+</button>
+      <div></div>
+      <button onclick="appendToEkran('4')">4</button>
+      <button onclick="appendToEkran('5')">5</button>
+      <button onclick="appendToEkran('6')">6</button>
+      <button onclick="hesaplama()">=</button>
+    </div>
+      </div>
+      <button onclick="appendToEkran('1')">1</button>
+      <button onclick="appendToEkran('2')">2</button>
+      <button onclick="appendToEkran('3')">3</button>
+      <button onclick="appendToEkran('0')">0</button>
+      <div>
+      <button onclick="appendToEkran('.')">.</button>
+      
+  </div>
+
+  <script>
+    let Ekran = document.getElementById('Ekran');
+    let cvpn = '';
+    let öncekisayı = '';
+
+    function appendToEkran(value) {
+      if (öncekisayı !== '') {
+        cvpn = öncekisayı; 
+        öncekisayı = ''; 
+      }
+      cvpn += value;
+      Ekran.value = cvpn;
+    }
+
+    function clearEkran() {
+      cvpn = '';
+      Ekran.value = '';
+    }
+
+    function hesaplama() {
+      try {
+        öncekisayı = eval(cvpn); 
+        Ekran.value = öncekisayı;
+        cvpn = '';
+      } catch (error) {
+        Ekran.value = 'Error';
+      }
+    }
+
+    const kordin = { x: 0, y: 0 };
+const czz = document.querySelectorAll(".circle");
+
+const renkler = [
+  "#1f005c",
+  "#382073",
+  "#503c8b",
+  "#6859a2",
+  "#8177ba",
+  "#9b95d1",
+  "#b7b4e8",
+  "#d4d4ff",
+  "#d5585c",
+  "#d1525c",
+  "#c5415d",
+  "#c03b5d",
+  "#b22c5e",
+  "#ac265e",
+  "#9c155f",
+  "#950f5f",
+  "#830060",
+  "#7c0060",
+  "#680060",
+  "#60005f",
+  "#48005f",
+  "#3d005e"
+];
+
+czz.forEach(function (circle, index) {
+  circle.x = 0;
+  circle.y = 0;
+  circle.style.backgroundColor = renkler[index % renkler.length];
+});
+
+window.addEventListener("mousemove", function(e){
+  kordin.x = e.clientX;
+  kordin.y = e.clientY;
+  
+});
+
+function animateczz() {
+  
+  let x = kordin.x;
+  let y = kordin.y;
+  
+  czz.forEach(function (circle, index) {
+    circle.style.left = x - 12 + "px";
+    circle.style.top = y - 12 + "px";
+    
+    circle.style.scale = (czz.length - index) / czz.length;
+    
+    circle.x = x;
+    circle.y = y;
+
+    const nextCircle = czz[index + 1] || czz[0];
+    x += (nextCircle.x - x) * 0.3;
+    y += (nextCircle.y - y) * 0.3;
+  });
+ 
+  requestAnimationFrame(animateczz);
+}
+
+animateczz();
+
+
+  </script>
+</body>
+
+</html>
